@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/node-selector: node-role.kubernetes.io/infra=
+  labels:
+    app.kubernetes.io/component: exporter
+    app.kubernetes.io/created-by: alerts-exporter
+    app.kubernetes.io/instance: exporter
+    app.kubernetes.io/managed-by: commodore
+    app.kubernetes.io/name: namespace
+    app.kubernetes.io/part-of: alerts-exporter
+    control-plane: alerts-exporter
+    openshift.io/cluster-monitoring: "true"
+  name: appuio-alerts-exporter
