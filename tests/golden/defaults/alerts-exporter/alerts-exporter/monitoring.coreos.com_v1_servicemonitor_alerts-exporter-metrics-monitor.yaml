@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/created-by: alerts-exporter
+    app.kubernetes.io/instance: alerts-exporter-metrics-monitor
+    app.kubernetes.io/managed-by: commodore
+    app.kubernetes.io/name: servicemonitor
+    app.kubernetes.io/part-of: alerts-exporter
+    control-plane: alerts-exporter
+  name: alerts-exporter-metrics-monitor
+  namespace: appuio-alerts-exporter
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    metricRelabelings:
+    - action: keep
+      regex: alerts_exporter_.+
+      sourceLabels:
+      - __name__
+    path: /metrics
+    port: https
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  selector:
+    matchLabels:
+      control-plane: alerts-exporter

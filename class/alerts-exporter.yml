@@ -9,3 +9,23 @@ parameters:
           - ${_base_directory}/component/main.jsonnet
         input_type: jsonnet
         output_path: alerts-exporter/
+
+      - input_paths:
+          - ${_base_directory}/component/alerts-exporter.jsonnet
+        input_type: jsonnet
+        output_path: ${_base_directory}/alerts-exporter
+        output_type: yaml
+      - input_type: external
+        output_path: .
+        input_paths:
+          - ${_kustomize_wrapper}
+        env_vars:
+          INPUT_DIR: ${_base_directory}/alerts-exporter
+        args:
+          - \${compiled_target_dir}/alerts-exporter
+
+      # Cleanup
+      - input_paths:
+          - ${_base_directory}/alerts-exporter
+        input_type: remove
+        output_path: .
