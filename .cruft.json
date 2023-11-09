@@ -7,7 +7,7 @@
       "name": "alerts-exporter",
       "slug": "alerts-exporter",
       "parameter_key": "alerts_exporter",
-      "test_cases": "defaults",
+      "test_cases": "defaults openshift4",
       "add_lib": "n",
       "add_pp": "n",
       "add_golden": "y",
