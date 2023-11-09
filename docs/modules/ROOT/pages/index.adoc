@@ -1,0 +1,5 @@
+= alerts-exporter
+
+alerts-exporter is a Commodore component to manage alerts-exporter.
+
+See the xref:references/parameters.adoc[parameters] reference for further details.

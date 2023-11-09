@@ -1,0 +1,4 @@
+parameters:
+  alerts_exporter:
+    =_metadata: {}
+    namespace: syn-alerts-exporter
