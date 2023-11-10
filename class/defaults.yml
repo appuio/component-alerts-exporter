@@ -26,3 +26,7 @@ parameters:
 
     kustomize_input:
       namespace: ${alerts_exporter:namespace}
+
+    exporter:
+      deploymentPatch: {}
+      extraArgs: []

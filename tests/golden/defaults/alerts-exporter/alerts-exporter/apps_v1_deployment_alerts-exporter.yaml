@@ -25,6 +25,26 @@ spec:
     spec:
       containers:
       - args:
+        - --listen-addr=127.0.0.1:8080
+        - --filter=severity=critical
+        image: ghcr.io/appuio/alerts_exporter:latest
+        name: exporter
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - mountPath: /var/secrets/basic-auth-token
+          name: basic-auth-token
+      - args:
         - --secure-listen-address=0.0.0.0:8443
         - --upstream=http://127.0.0.1:8080/
         - --logtostderr=true
@@ -47,25 +67,13 @@ spec:
           capabilities:
             drop:
             - ALL
-      - args:
-        - --listen-addr=127.0.0.1:8080
-        image: ghcr.io/appuio/alerts_exporter:latest
-        name: exporter
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 10m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
       securityContext:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: alerts-exporter
       terminationGracePeriodSeconds: 10
+      volumes:
+      - name: basic-auth-token
+        secret:
+          name: prometheus-basic-auth-token

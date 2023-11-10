@@ -21,6 +21,26 @@ local patch = function(p) {
   patch: std.manifestJsonMinified(p),
 };
 
+local deploymentPatch = {
+  apiVersion: 'apps/v1',
+  kind: 'Deployment',
+  metadata: {
+    name: 'alerts-exporter',
+  },
+} + com.makeMergeable(params.exporter.deploymentPatch);
+
+local extraArgsPatch = [
+  {
+    op: 'test',
+    path: '/spec/template/spec/containers/0/name',
+    value: 'exporter',
+  },
+] + std.map(function(arg) {
+  op: 'add',
+  path: '/spec/template/spec/containers/0/args/-',
+  value: arg,
+}, params.exporter.extraArgs);
+
 com.Kustomization(
   '%(repository)s//%(subdir)s' % params.manifests,
   params.manifests.version,
@@ -39,6 +59,13 @@ com.Kustomization(
   params.kustomize_input {
     patches+: [
       patch(removeUpstreamNamespace),
+      patch(deploymentPatch),
+      patch(extraArgsPatch) {
+        target: {
+          kind: 'Deployment',
+          name: 'alerts-exporter',
+        },
+      },
     ],
     labels+: [
       {

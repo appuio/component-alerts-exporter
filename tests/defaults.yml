@@ -1,3 +1,18 @@
-# Overwrite parameters here
-
-# parameters: {...}
+parameters:
+  alerts_exporter:
+    exporter:
+      deploymentPatch:
+        spec:
+          template:
+            spec:
+              containers:
+              - name: exporter
+                volumeMounts:
+                - mountPath: /var/secrets/basic-auth-token
+                  name: basic-auth-token
+              volumes:
+                - name: basic-auth-token
+                  secret:
+                    name: prometheus-basic-auth-token
+      extraArgs:
+        - --filter=severity=critical
