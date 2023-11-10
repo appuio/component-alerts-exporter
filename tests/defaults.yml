@@ -6,10 +6,10 @@ parameters:
           template:
             spec:
               containers:
-              - name: exporter
-                volumeMounts:
-                - mountPath: /var/secrets/basic-auth-token
-                  name: basic-auth-token
+                - name: exporter
+                  volumeMounts:
+                    - mountPath: /var/secrets/basic-auth-token
+                      name: basic-auth-token
               volumes:
                 - name: basic-auth-token
                   secret:
