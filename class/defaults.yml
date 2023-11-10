@@ -1,4 +1,32 @@
 parameters:
   alerts_exporter:
     =_metadata: {}
-    namespace: syn-alerts-exporter
+    namespace: appuio-alerts-exporter
+
+    namespaceMetadata:
+      annotations:
+        openshift.io/node-selector: "node-role.kubernetes.io/infra="
+      labels:
+        openshift.io/cluster-monitoring: "true"
+
+    images:
+      alerts_exporter:
+        registry: ghcr.io
+        image: appuio/alerts_exporter
+        tag: v0.1.0
+      kube_rbac_proxy:
+        registry: gcr.io
+        image: kubebuilder/kube-rbac-proxy
+        tag: v0.14.1
+
+    manifests:
+      repository: https://github.com/appuio/alerts_exporter
+      subdir: config/default
+      version: ${alerts_exporter:images:alerts_exporter:tag}
+
+    kustomize_input:
+      namespace: ${alerts_exporter:namespace}
+
+    exporter:
+      deploymentPatch: {}
+      extraArgs: []

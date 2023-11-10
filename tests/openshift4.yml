@@ -1,0 +1,4 @@
+parameters:
+  alerts_exporter:
+    manifests:
+      subdir: config/openshift4
