@@ -6,14 +6,123 @@ The parent key for all of the following parameters is `alerts_exporter`.
 
 [horizontal]
 type:: string
-default:: `syn-alerts-exporter`
+default:: `appuio-alerts-exporter`
 
 The namespace in which to deploy this component.
 
 
-== Example
+== `namespaceMetadata`
 
+[horizontal]
+type:: dict
+default::
++
 [source,yaml]
 ----
-namespace: example-namespace
+annotations:
+  openshift.io/node-selector: "node-role.kubernetes.io/infra="
+labels:
+  openshift.io/cluster-monitoring: "true"
 ----
+
+Metadata to be added to the namespace.
+
+
+== `images`
+
+[horizontal]
+type:: dictionary
+
+The images to use for this component.
+
+
+== `manifests.repository`
+
+[horizontal]
+type:: string
+default:: `https://github.com/appuio/alerts_exporter`
+
+The Git repo to the controller deployment manifests.
+
+
+== `manifests.subdir`
+
+[horizontal]
+type:: string
+default:: `config/default`
+
+The Git repo subdir to the controller deployment manifests.
+`config/openshift4` can be used for OpenShift 4.x.
+
+
+== `manifests.version`
+
+[horizontal]
+type:: string
+default:: `${alerts_exporter:images:alerts_exporter:tag}`
+
+The Git reference to the controller deployment manifests.
+The default is the tag of the controller image.
+
+
+== `kustomize_input`
+
+[horizontal]
+type:: dictionary
+default::
++
+[source,yaml]
+----
+kustomize_input:
+  namespace: ${alerts_exporter:namespace}
+----
+
+The raw input to the kustomize build.
+Sets the namespace by default.
+
+
+== `exporter.deploymentPatch`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+example::
++
+[source,yaml]
+----
+exporter:
+  deploymentPatch:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: exporter
+            resources:
+              limits:
+                cpu: 100m
+                memory: 100Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+----
+
+A patch to apply to the exporter deployment.
+This can be used to set resource limits for example.
+
+
+== `exporter.extraArgs`
+
+[horizontal]
+type:: list
+default:: `[]`
+example::
++
+[source,yaml]
+----
+extraArgs:
+- --filter=severity!=info
+- --filter=severity!=debug
+----
+
+A helper to set extra arguments for the exporter.
+This can be used to filter alerts by severity for example.
