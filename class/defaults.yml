@@ -12,8 +12,8 @@ parameters:
     images:
       alerts_exporter:
         registry: ghcr.io
-        image: appuio/alerts-exporter
-        tag: main
+        image: appuio/alerts_exporter
+        tag: v0.1.0
       kube_rbac_proxy:
         registry: gcr.io
         image: kubebuilder/kube-rbac-proxy

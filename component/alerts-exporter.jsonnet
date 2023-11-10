@@ -45,7 +45,7 @@ com.Kustomization(
   '%(repository)s//%(subdir)s' % params.manifests,
   params.manifests.version,
   {
-    'ghcr.io/appuio/alerts-exporter': {
+    'ghcr.io/appuio/alerts_exporter': {
       local image = params.images.alerts_exporter,
       newTag: image.tag,
       newName: '%(registry)s/%(image)s' % image,
