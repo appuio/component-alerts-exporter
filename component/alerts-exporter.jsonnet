@@ -41,6 +41,18 @@ local extraArgsPatch = [
   value: arg,
 }, params.exporter.extraArgs);
 
+local setPriorityClass = {
+  patch: |||
+    - op: add
+      path: "/spec/template/spec/priorityClassName"
+      value: "system-cluster-critical"
+  |||,
+  target: {
+    kind: 'Deployment',
+    name: 'alerts-exporter',
+  },
+};
+
 com.Kustomization(
   '%(repository)s//%(subdir)s' % params.manifests,
   params.manifests.version,
@@ -66,6 +78,7 @@ com.Kustomization(
           name: 'alerts-exporter',
         },
       },
+      setPriorityClass,
     ],
     labels+: [
       {
