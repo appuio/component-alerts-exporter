@@ -27,7 +27,7 @@ spec:
       - args:
         - --listen-addr=127.0.0.1:8080
         - --filter=severity=critical
-        image: ghcr.io/appuio/alerts_exporter:v0.1.0
+        image: ghcr.io/appuio/alerts_exporter:v0.1.1
         name: exporter
         resources:
           limits:
