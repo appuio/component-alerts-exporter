@@ -27,7 +27,14 @@ spec:
       - args:
         - --listen-addr=127.0.0.1:8080
         - --filter=severity=critical
-        image: ghcr.io/appuio/alerts_exporter:v0.1.1
+        image: ghcr.io/appuio/alerts_exporter:v0.2.0
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 3
         name: exporter
         resources:
           limits:
