@@ -17,7 +17,7 @@ parameters:
       kube_rbac_proxy:
         registry: gcr.io
         image: kubebuilder/kube-rbac-proxy
-        tag: v0.14.1
+        tag: v0.16.0
 
     manifests:
       repository: https://github.com/appuio/alerts_exporter
