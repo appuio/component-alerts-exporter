@@ -26,12 +26,19 @@ spec:
       containers:
       - args:
         - --listen-addr=127.0.0.1:8080
+        - --health-listen-addr=$(POD_IP):8081
         - --filter=severity=critical
-        image: ghcr.io/appuio/alerts_exporter:v0.2.0
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: ghcr.io/appuio/alerts_exporter:v0.3.1
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8080
+            port: 8081
           initialDelaySeconds: 15
           periodSeconds: 20
           timeoutSeconds: 3
