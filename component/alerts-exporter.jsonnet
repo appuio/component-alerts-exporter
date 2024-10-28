@@ -52,6 +52,23 @@ local setPriorityClass = {
     name: 'alerts-exporter',
   },
 };
+local fixMonitoringRbac = {
+  patch: |||
+    - op: add
+      path: "/rules/-"
+      value:
+        apiGroups:
+        - 'monitoring.coreos.com'
+        resources:
+        - 'alertmanagers/api'
+        verbs:
+        - 'get'
+  |||,
+  target: {
+    kind: 'ClusterRole',
+    name: 'exporter-role',
+  },
+};
 
 com.Kustomization(
   '%(repository)s//%(subdir)s' % params.manifests,
@@ -78,6 +95,7 @@ com.Kustomization(
           name: 'alerts-exporter',
         },
       },
+      fixMonitoringRbac,
       setPriorityClass,
     ],
     labels+: [

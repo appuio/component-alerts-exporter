@@ -9,3 +9,9 @@ rules:
   - /api/v2/alerts
   verbs:
   - get
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagers/api
+  verbs:
+  - get
