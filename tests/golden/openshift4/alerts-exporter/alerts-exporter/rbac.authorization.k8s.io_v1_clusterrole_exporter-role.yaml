@@ -9,5 +9,7 @@ rules:
   - monitoring.coreos.com
   resources:
   - alertmanagers
+  - alertmanagers/api
   verbs:
   - patch
+  - get
