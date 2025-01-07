@@ -1,6 +1,7 @@
 parameters:
   alerts_exporter:
-    =_metadata: {}
+    =_metadata:
+      multi_tenant: true
     namespace: appuio-alerts-exporter
 
     namespaceMetadata:
