@@ -38,7 +38,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.podIP
-        image: ghcr.io/appuio/alerts_exporter:v0.3.2
+        image: ghcr.io/appuio/alerts_exporter:v0.3.3
         livenessProbe:
           httpGet:
             path: /healthz
@@ -68,7 +68,7 @@ spec:
         - --upstream=http://127.0.0.1:8080/
         - --logtostderr=true
         - --v=0
-        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.16.0
+        image: quay.io/brancz/kube-rbac-proxy:v0.18.2
         name: kube-rbac-proxy
         ports:
         - containerPort: 8443

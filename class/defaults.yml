@@ -14,11 +14,11 @@ parameters:
       alerts_exporter:
         registry: ghcr.io
         image: appuio/alerts_exporter
-        tag: v0.3.2
+        tag: v0.3.3
       kube_rbac_proxy:
-        registry: gcr.io
-        image: kubebuilder/kube-rbac-proxy
-        tag: v0.16.0
+        registry: quay.io
+        image: brancz/kube-rbac-proxy
+        tag: v0.18.2
 
     manifests:
       repository: https://github.com/appuio/alerts_exporter
