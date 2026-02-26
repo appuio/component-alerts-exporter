@@ -60,12 +60,12 @@ com.Kustomization(
     'ghcr.io/appuio/alerts_exporter': {
       local image = params.images.alerts_exporter,
       newTag: image.tag,
-      newName: '%(registry)s/%(image)s' % image,
+      newName: '%(registry)s/%(repository)s' % image,
     },
     'quay.io/brancz/kube-rbac-proxy': {
       local image = params.images.kube_rbac_proxy,
       newTag: image.tag,
-      newName: '%(registry)s/%(image)s' % image,
+      newName: '%(registry)s/%(repository)s' % image,
     },
   },
   params.kustomize_input {
